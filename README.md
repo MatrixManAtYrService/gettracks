@@ -1,0 +1,92 @@
+This repo is more of a sketch than anything that might be useful.
+
+I became interested in an algorithm to brute-force word search puzzles.
+You can see it at the bottom of [solver.py](src/solver/solver.py).
+
+I got a bit fancy with the output of [my tests](tests/test_solver.py).
+
+```
+❯  poetry run pytest
+===================================== test session starts =====================================
+platform darwin -- Python 3.12.1, pytest-8.2.2, pluggy-1.5.0
+rootdir: /Users/matt/2024/07/18
+configfile: pytest.ini
+collected 9 items
+
+tests/test_solver.py::test_raise_if_not_rect
+INFO     Trying bad grid:                                                     test_solver.py:36
+---------| xxxx
+---------| yy
+---------| xxxx
+INFO     As expected, got exception: <ExceptionInfo ValueError('not a         test_solver.py:40
+         rectangle, got multiple row lengths: {2, 4}') tblen=3>
+PASSED
+tests/test_solver.py::test_left
+---------| abcd
+---------| efgh
+---------| ijkl
+INFO     got left side coordinates: {(0, 1), (0, 2), (0, 0)}                  test_solver.py:60
+PASSED
+tests/test_solver.py::test_top
+---------| abcd
+---------| efgh
+---------| ijkl
+INFO     got top side coordinates: {(1, 0), (2, 0), (3, 0), (0, 0)}           test_solver.py:66
+PASSED
+tests/test_solver.py::test_move_right
+---------| abcd
+---------| efgh
+---------| ijkl
+INFO     one right from the origin: (1, 0)                                    test_solver.py:73
+PASSED
+tests/test_solver.py::test_move_down
+---------| abcd
+---------| efgh
+---------| ijkl
+INFO     one down from the origin: (0, 1)                                     test_solver.py:80
+PASSED
+tests/test_solver.py::test_diagonal
+---------| abcd
+---------| efgh
+---------| ijkl
+INFO     one down and right from the origin: (1, 1)                           test_solver.py:87
+PASSED
+tests/test_solver.py::test_too_far
+---------| abcd
+---------| efgh
+---------| ijkl
+INFO     moved 1 times to the right, got: (1, 0)                              test_solver.py:93
+INFO     moved 2 times to the right, got: (2, 0)                              test_solver.py:93
+INFO     moved 3 times to the right, got: (3, 0)                              test_solver.py:93
+INFO     moved 4 times to the right, got: None                                test_solver.py:93
+PASSED
+tests/test_solver.py::test_get_tracks
+---------| abcd
+---------| efgh
+---------| ijkl
+DEBUG    Track(letters='efgh', coordinates={(0, 1), (3, 1), (1, 1), (2, 1)})      solver.py:115
+DEBUG    Track(letters='ijkl', coordinates={(0, 2), (1, 2), (3, 2), (2, 2)})      solver.py:115
+DEBUG    Track(letters='abcd', coordinates={(1, 0), (2, 0), (3, 0), (0, 0)})      solver.py:115
+DEBUG    Track(letters='ej', coordinates={(0, 1), (1, 2)})                        solver.py:115
+DEBUG    Track(letters='i', coordinates={(0, 2)})                                 solver.py:115
+DEBUG    Track(letters='afk', coordinates={(1, 1), (2, 2), (0, 0)})               solver.py:115
+DEBUG    Track(letters='bgl', coordinates={(1, 0), (3, 2), (2, 1)})               solver.py:115
+DEBUG    Track(letters='ch', coordinates={(3, 1), (2, 0)})                        solver.py:115
+DEBUG    Track(letters='d', coordinates={(3, 0)})                                 solver.py:115
+DEBUG    Track(letters='bfj', coordinates={(1, 0), (1, 1), (1, 2)})               solver.py:115
+DEBUG    Track(letters='cgk', coordinates={(2, 0), (2, 1), (2, 2)})               solver.py:115
+DEBUG    Track(letters='dhl', coordinates={(3, 1), (3, 2), (3, 0)})               solver.py:115
+DEBUG    Track(letters='aei', coordinates={(0, 1), (0, 2), (0, 0)})               solver.py:115
+DEBUG    Track(letters='eb', coordinates={(0, 1), (1, 0)})                        solver.py:115
+DEBUG    Track(letters='ifc', coordinates={(1, 1), (0, 2), (2, 0)})               solver.py:115
+DEBUG    Track(letters='jgd', coordinates={(1, 2), (2, 1), (3, 0)})               solver.py:115
+DEBUG    Track(letters='kh', coordinates={(3, 1), (2, 2)})                        solver.py:115
+DEBUG    Track(letters='a', coordinates={(0, 0)})                                 solver.py:115
+DEBUG    Track(letters='l', coordinates={(3, 2)})                                 solver.py:115
+PASSED
+tests/test_solver.py::test_examples[case0] PASSED
+
+====================================== 9 passed in 0.04s ======================================
+```
+
+The output above has me convinced that my algorithm is inedeed identifying all of the "tracks" in the grid.
